@@ -1,0 +1,2 @@
+* * * * * root /usr/local/bin/php /work/artisan schedule:run >> /dev/null 2>&1
+
