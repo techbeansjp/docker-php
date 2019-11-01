@@ -1,4 +1,4 @@
-# PHP用docker基礎
+# docker basic for PHP,MySQL
 
 ## install
 
@@ -32,3 +32,7 @@ password: password
 database: dev_php
 port: 3307
 ```
+
+## and...
+
+please delete `.git` and `.gitignore` .
