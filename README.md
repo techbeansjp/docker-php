@@ -1,6 +1,6 @@
 # docker basic for PHP,MySQL
 
-## install
+## install & start
 
 ```
 $ git clone git@github.com:techbeansjp/docker-php.git
@@ -24,6 +24,8 @@ $ docker-compose exec app /bin/bash
 ```
 
 ## mysql
+
+Information for connect to mysql 
 
 ```
 host: 127.0.0.1
