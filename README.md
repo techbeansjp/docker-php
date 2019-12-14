@@ -72,7 +72,7 @@ You will confirm `phpinfo()` in your browser.
 ## access in docker-container
 
 ```
-$ docker-compose exec app /bin/bash
+$ docker-compose exec php /bin/bash
 ```
 
 ## mysql

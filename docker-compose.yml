@@ -1,5 +1,10 @@
 version: "3"
 services:
+  php:
+    build: ./docker/php
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/php/php.ini:/etc/php.ini
   # apacheを使う場合は下記設定を利用
   #httpd:
   #  build:
@@ -20,16 +25,11 @@ services:
     ports:
       - ${HTTPD_PORT}:80
     privileged: true
-    links:
-      - php
     volumes:
       - "./src:/var/www/html"
       - "./docker/nginx/default.conf:/etc/nginx/nginx.conf"
-  php:
-    build: ./docker/php
-    volumes:
-      - ./src:/var/www/html
-      - ./docker/php/php.ini:/etc/php.ini
+    depends_on:
+      - php
   mysql:
     build: ./docker/mysql
     volumes:

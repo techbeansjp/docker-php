@@ -1,32 +1,22 @@
-FROM php:7.3.5-fpm-alpine
-LABEL maintainer "masa"
+FROM php:7.3.5-fpm
+LABEL maintainer "maekawa"
 
-# tinker(psysh)
-ARG PSYSH_DIR=/usr/local/share/psysh
-ARG PHP_MANUAL_URL=http://psysh.org/manual/ja/php_manual.sqlite
+COPY php.ini /usr/local/etc/php/
 
-# timezone
-ARG TZ=Asia/Tokyo
+RUN apt-get update \
+  && apt-get install -y zlib1g-dev mariadb-client libzip-dev \
+  && docker-php-ext-install zip pdo_mysql
 
-RUN set -eux && \
-  apk update && \
-  apk add --update --no-cache --virtual=.build-dependencies \
-    autoconf \
-    gcc \
-    g++ \
-    make \
-    tzdata && \
-  apk add --update --no-cache \
-    icu-dev \
-    libzip-dev && \
-  cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-  echo ${TZ} > /etc/timezone && \
-  pecl install xdebug && \
-  apk del .build-dependencies && \
-  docker-php-ext-install intl pdo_mysql mbstring zip bcmath && \
-  docker-php-ext-enable xdebug && \
-  mkdir $PSYSH_DIR && wget $PHP_MANUAL_URL -P $PSYSH_DIR
+#Composer install
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# Config
-COPY php.ini /usr/local/etc/php
-COPY crontab/laravel /var/spool/cron/crontabs/root
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+ENV COMPOSER_HOME /composer
+
+ENV PATH $PATH:/composer/vendor/bin
+
+
+WORKDIR /var/www/html
+
+RUN composer global require "laravel/installer"
