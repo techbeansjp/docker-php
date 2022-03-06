@@ -1,4 +1,4 @@
-FROM mysql:5.7.26
+FROM mysql:8.0.28
 LABEL maintainer "kazu"
 
 COPY mysql.cnf /etc/mysql/conf.d/mysql.cnf

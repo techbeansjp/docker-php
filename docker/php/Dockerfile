@@ -1,10 +1,10 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 LABEL maintainer "maekawa"
 
 COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
-  && apt-get install -y zlib1g-dev mariadb-client libzip-dev \
+  && apt-get install -y zlib1g-dev mariadb-client libzip-dev nodejs npm \
   && docker-php-ext-install zip pdo_mysql
 
 #Composer install
